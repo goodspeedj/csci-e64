@@ -71,12 +71,12 @@ for i,e in enumerate(allElements):
     	actors = re.sub("^With: ", "", plaintext(actors.content))
     	
     for runtime in e.by_class('runtime')[:1]:
-    	runtime = re.search("^\d", plaintext(runtime.content))
+    	runtime = re.search("^\d+", plaintext(runtime.content))
 
- 	writer.writerow([title,rank,genre,actors,runtime.group(0)])
+ 	
     
-    print title + "," + rank + ",\"" + genre + "\",\"" + actors + "\"," + runtime.group(0)
-
+    #print title + "," + rank + ",\"" + genre + "\",\"" + actors + "\"," + runtime.group(0)
+    writer.writerow([title,rank,genre,actors,runtime.group(0)])
 output.close()
 
 
