@@ -58,6 +58,19 @@ dom = DOM(url.download(cached=True))
 #        Actors (listed on the page directly only or first three, separated by semicolons)
 #        Ratings
 #        Number of Ratings
+"""
+for every link
+    movieURL = URL(link)
+    movieDOM = DOM(movieURL.download(cached=True)
+    
+"""
+
+allElements = dom.by_tag("a")
+for e in allElements:
+    movieTitleLinks = re.match("http://www.imdb.com/title/.*", abs(e.attributes.get('href',''), base=url.redirect or url.string))
+    #print abs(e.attributes.get('href',''), base=url.redirect or url.string)
+    if(movieTitleLinks):
+        print movieTitleLinks.group(0)
 
 
 output.close()
