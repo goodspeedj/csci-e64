@@ -70,7 +70,12 @@ for e in allElements:
     movieTitleLinks = re.match("http://www.imdb.com/title/.*", abs(e.attributes.get('href',''), base=url.redirect or url.string))
     #print abs(e.attributes.get('href',''), base=url.redirect or url.string)
     if(movieTitleLinks):
-        print movieTitleLinks.group(0)
-
+        #print movieTitleLinks.group(0)
+        
+        movieUrl = URL(movieTitleLinks.group(0))
+        movieDom = DOM(movieUrl.download(cached=True))
+        
+        for movie in movieDom.by_class("header"):
+            print movie.content
 
 output.close()
