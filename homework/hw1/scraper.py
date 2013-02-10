@@ -15,6 +15,7 @@
 # We are first importing from the pattern library and csv
 import csv
 import re
+import unicodedata
 
 from pattern.web import URL, DOM, plaintext, strip_between
 from pattern.web import NODE, TEXT, COMMENT, ELEMENT, DOCUMENT
@@ -59,19 +60,19 @@ for i,e in enumerate(allElements):
 	
     # WRITE YOUR CODE HERE
     for title in e.by_tag('a')[:1]:
-		title = plaintext(title.content)
+		title = plaintext(title.content.encode('ascii','ignore'))
 	
     for rank in e.by_class('value')[:1]:
-    	rank = plaintext(rank.content)
+    	rank = plaintext(rank.content.encode('ascii','ignore'))
     
     for genre in e.by_class('genre')[:1]:
-    	genre = re.sub(" \| ", ", ", plaintext(genre.content))
+    	genre = re.sub(" \| ", ", ", plaintext(genre.content.encode('ascii','ignore')))
     	
     for actors in e.by_class('credit')[:1]:
-    	actors = re.sub("^With: ", "", plaintext(actors.content))
+    	actors = re.sub("^With: ", "", plaintext(actors.content.encode('ascii','ignore')))
     	
     for runtime in e.by_class('runtime')[:1]:
-    	runtime = re.search("^\d+", plaintext(runtime.content))
+    	runtime = re.search("^\d+", plaintext(runtime.content.encode('ascii','ignore')))
 
  	
     
