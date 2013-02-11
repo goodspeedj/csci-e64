@@ -58,21 +58,15 @@ dom = DOM(url.download(cached=True))
 #        Actors (listed on the page directly only or first three, separated by semicolons)
 #        Ratings
 #        Number of Ratings
-"""
-for every link
-    movieURL = URL(link)
-    movieDOM = DOM(movieURL.download(cached=True)
-    
-"""
+
 
 allElements = dom.by_tag("a")
 for e in allElements:
     movieTitleLinks = re.match("http://www.imdb.com/title/.*", abs(e.attributes.get('href',''), base=url.redirect or url.string))
-    #print abs(e.attributes.get('href',''), base=url.redirect or url.string)
-    if(movieTitleLinks):
-        #print movieTitleLinks.group(0)
 
-        
+    # Follow the links
+    if(movieTitleLinks):
+
         movieUrl = URL(movieTitleLinks.group(0))
         movieDom = DOM(movieUrl.download(cached=True))
         
@@ -82,8 +76,7 @@ for e in allElements:
         #=======================================================================
         for movie in movieDom.by_tag("title"):
             title = re.sub(' \(\d+\) - IMDb','', movie.content.encode('ascii','ignore').strip())
- 
-            print title
+
             
         
         #=======================================================================
@@ -92,7 +85,7 @@ for e in allElements:
         for movie in movieDom.by_class("infobar"):
             time = re.search('\d+ min', movie.content.encode('ascii', 'ignore').strip())
             runtime = re.sub(' min','', time.group(0))
-            print runtime
+
             
             #===================================================================
             # Get the genres
@@ -100,9 +93,12 @@ for e in allElements:
             genre = []
             for g in movie.by_tag('a'):
                 
-                if (re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore').strip('\r\n')) != ' \n'):
-                    genre.append(re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore').strip('\r\n')))
-                print genre
+                type = re.sub('\n|\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore').strip('\r\n'))
+                
+                
+                if ((type != ' \n') and not (re.match('^\s+', type))):
+                    genre.append(type)
+            
             
             genresStr = ';'.join(genre)
             
@@ -124,7 +120,6 @@ for e in allElements:
                 directors.append(dirs)
         
         directorsStr = ';'.join(directors)
-        print directorsStr
 
 
         #=======================================================================
@@ -139,11 +134,12 @@ for e in allElements:
             # Get rid of new line
             wr = re.sub('\n', '', w)
             
+            # Get rid of spaces
             wrt = re.sub('\s+\(.*','', wr)
+            
             writers.append(wrt)
         
         writersStr = ';'.join(writers)
-        print writersStr
         
         
         #=======================================================================
@@ -156,7 +152,26 @@ for e in allElements:
                 actors.append(a)
         
         actorsStr = ';'.join(actors)
-        print actorsStr
+        
+        
+        #=======================================================================
+        # Get the rating
+        #=======================================================================
+        for movie in movieDom.by_class("star-box-giga-star"):
+            rating = movie.content.encode('ascii','ignore').strip()
+        
+        
+        
+        #=======================================================================
+        # Get the number of ratings
+        #=======================================================================
+        for movie in movieDom.by_attribute(itemprop="ratingCount"):
+            ratingCnt = movie.content.encode('ascii','ignore')
+            
 
-        writer.writerow([title,runtime,genresStr,directorsStr,writersStr,actorStr])
-        output.close()
+        
+        # Write out the lines of the file
+        writer.writerow([title,runtime,genresStr,directorsStr,writersStr,actorsStr,rating,ratingCnt])
+        print title + "," + runtime + "," + genresStr + "," + directorsStr + "," + writersStr + "," + actorsStr + "," + rating + "," + ratingCnt
+        
+output.close()
