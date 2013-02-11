@@ -90,9 +90,9 @@ for e in allElements:
         # Get the runtime
         #=======================================================================
         for movie in movieDom.by_class("infobar"):
-            runtime = re.search('\d+ min', movie.content.encode('ascii', 'ignore').strip())
-
-            print runtime.group(0)
+            time = re.search('\d+ min', movie.content.encode('ascii', 'ignore').strip())
+            runtime = re.sub(' min','', time.group(0))
+            print runtime
             
             #===================================================================
             # Get the genres
@@ -145,5 +145,5 @@ for e in allElements:
         writersStr = ';'.join(writers)
         print writersStr
 
-        writer.writerow([title,runtime.group(0),genresStr,directorsStr,writersStr])
+        writer.writerow([title,runtime,genresStr,directorsStr,writersStr])
         output.close()
