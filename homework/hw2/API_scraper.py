@@ -32,7 +32,7 @@ from pattern.db  import Datasheet, pprint
 
 # This example retrieves tweets containing given keywords from Twitter (http://twitter.com).
 
-try: 
+#try: 
     # We store tweets in a Datasheet that can be saved as a text file (comma-separated).
     # In the first column, we'll store a unique ID for each tweet.
     # We only want to add the latest tweets, i.e., those we haven't previously encountered.
@@ -42,11 +42,11 @@ try:
     #***************************************************************************
     # Changed file output location - not sure this is needed?
     #***************************************************************************
-    table = Datasheet.load("twitter_output.csv")
-    index = dict.fromkeys(table.columns[0], True)
-except:
-    table = Datasheet()
-    index = {}
+    #table = Datasheet.load("twitter_output.csv")
+    #index = dict.fromkeys(table.columns[0], True)
+#except:
+    #table = Datasheet()
+    #index = {}
 
 engine = Twitter(language="en")
 
@@ -71,20 +71,19 @@ for tweet in engine.search("visualization", count=100, cached=False):
 		  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore') + "," + \
 		  tweet.text.encode('ascii', 'ignore') 
 		  
-	#print tweet.text
-	#print tweet.date
+
 	#print hashtags(tweet.text) # Keywords in tweets start with a #.
-	#print
+
 	# Create a unique ID based on the tweet content and author.
-	id = str(hash(tweet.author + tweet.text))
+	#id = str(hash(tweet.author + tweet.text))
     # Only add the tweet to the table if it doesn't already contain this ID.
-	if len(table) == 0 or id not in index:
-		table.append([id, tweet.text])
-		index[id] = True
+	#if len(table) == 0 or id not in index:
+	#	table.append([id, tweet.text])
+	#	index[id] = True
 
-table.save("twitter_output.csv")
+#table.save("twitter_output.csv")
 
-print "Total results:", len(table)
+#print "Total results:", len(table)
 print
 
 # Print all the rows in the table.
