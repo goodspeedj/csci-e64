@@ -1,4 +1,4 @@
-import csv, re, cStringIO, codecs
+import csv, re, cStringIO, codecs, unicodedata
 
 from pattern.web import abs, URL, DOM, plaintext, strip_between
 from pattern.web import NODE, TEXT, COMMENT, ELEMENT, DOCUMENT
@@ -75,7 +75,24 @@ for e in allElements:
         movieUrl = URL(movieTitleLinks.group(0))
         movieDom = DOM(movieUrl.download(cached=True))
         
-        for movie in movieDom.by_class("header"):
-            print movie.content
+        for movie in movieDom.by_tag("title"):
+            title = re.sub('\(\d+\) - IMDb','', movie.content.encode('ascii','ignore'))
+            print title
+            
+        for movie in movieDom.by_class("infobar"):
+            runtime = re.search('\d+ min', movie.content.encode('ascii', 'ignore'))
+            print runtime.group(0)
+            
+            for g in movie.by_tag('a'):
+                genre = re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore'))
+                print genre
+            
+        #for movie in movieDom.by_class('rec-elipsis'):
+        #    genre = movie.content.encode('ascii', 'ignore')
+        #    print genre
+        
+        for movie in movieDom.by_attribute(itemprop="director")[:1]:
+            directors = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore'))
+            print directors
 
 output.close()
