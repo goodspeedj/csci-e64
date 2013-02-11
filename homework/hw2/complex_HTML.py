@@ -144,6 +144,17 @@ for e in allElements:
         
         writersStr = ';'.join(writers)
         print writersStr
+        
+        
+        #=======================================================================
+        # Get the actors
+        #=======================================================================
+        actors = []
+        for movie in movieDom.by_attribute(itemprop="actors"):
+            a = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore').lstrip('\r\n'))
+            actors.append(a)
+        actorsStr = ';'.join(actors)
+        print actorsStr
 
         writer.writerow([title,runtime,genresStr,directorsStr,writersStr])
         output.close()
