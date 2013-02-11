@@ -71,28 +71,79 @@ for e in allElements:
     #print abs(e.attributes.get('href',''), base=url.redirect or url.string)
     if(movieTitleLinks):
         #print movieTitleLinks.group(0)
+
         
         movieUrl = URL(movieTitleLinks.group(0))
         movieDom = DOM(movieUrl.download(cached=True))
         
+        
+        #=======================================================================
+        # Get the title
+        #=======================================================================
         for movie in movieDom.by_tag("title"):
-            title = re.sub('\(\d+\) - IMDb','', movie.content.encode('ascii','ignore'))
+            title = re.sub(' \(\d+\) - IMDb','', movie.content.encode('ascii','ignore').strip())
+ 
             print title
             
+        
+        #=======================================================================
+        # Get the runtime
+        #=======================================================================
         for movie in movieDom.by_class("infobar"):
-            runtime = re.search('\d+ min', movie.content.encode('ascii', 'ignore'))
+            runtime = re.search('\d+ min', movie.content.encode('ascii', 'ignore').strip())
+
             print runtime.group(0)
             
+            #===================================================================
+            # Get the genres
+            #===================================================================
+            genre = []
             for g in movie.by_tag('a'):
-                genre = re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore'))
+                
+                if (re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore').strip('\r\n')) != ' \n'):
+                    genre.append(re.sub('\d+.*|\(.*\)','', g.content.encode('ascii', 'ignore').strip('\r\n')))
                 print genre
             
-        #for movie in movieDom.by_class('rec-elipsis'):
-        #    genre = movie.content.encode('ascii', 'ignore')
-        #    print genre
+            genresStr = ';'.join(genre)
+            
+            
+        #=======================================================================
+        # Get the directors
+        #=======================================================================
+        directors = []
+        for movie in movieDom.by_attribute(itemprop="director"):
+            
+            # Get rid of the html tags
+            dir = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore').lstrip('\r\n'))
+            
+            # Get rid of new line
+            dirs = re.sub('\n', '', dir)
+            
+            # Directors for other movies have leading spaces - don't add them
+            if not re.match('^\s+', dirs):
+                directors.append(dirs)
         
-        for movie in movieDom.by_attribute(itemprop="director")[:1]:
-            directors = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore'))
-            print directors
+        directorsStr = ';'.join(directors)
+        print directorsStr
 
-output.close()
+
+        #=======================================================================
+        # Get the writers
+        #=======================================================================
+        writers = []
+        for movie in movieDom.by_attribute(itemprop="writer"):
+            
+            # Get rid of html tags
+            w = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore').lstrip('\r\n'))
+            
+            # Get rid of new line
+            wr = re.sub('\n', '', w)
+            
+            wrt = re.sub('\s+\(.*','', wr)
+            writers.append(wrt)
+        
+        writersStr = ';'.join(writers)
+        print writersStr
+
+        writer.writerow([title,runtime.group(0),genresStr,directorsStr,writersStr])
+        output.close()
