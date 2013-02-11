@@ -150,11 +150,13 @@ for e in allElements:
         # Get the actors
         #=======================================================================
         actors = []
-        for movie in movieDom.by_attribute(itemprop="actors"):
-            a = re.sub('<[a-zA-Z\/][^>]*>','', movie.content.encode('ascii','ignore').lstrip('\r\n'))
-            actors.append(a)
+        for movie in movieDom.by_class("txt-block"):
+            for actor in movie.by_attribute(itemprop="actors"):
+                a = re.sub('\n','',re.sub('<[a-zA-Z\/][^>]*>','', actor.content.encode('ascii','ignore').lstrip('\r\n')))
+                actors.append(a)
+        
         actorsStr = ';'.join(actors)
         print actorsStr
 
-        writer.writerow([title,runtime,genresStr,directorsStr,writersStr])
+        writer.writerow([title,runtime,genresStr,directorsStr,writersStr,actorStr])
         output.close()
