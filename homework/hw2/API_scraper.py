@@ -72,64 +72,73 @@ engine = Twitter(language="en")
 #	2. Number of tweets to return
 # 	3. Order that the results are returned in
 #	4. Date/Time formatting
+#	5. Turned into function
 #*******************************************************************************
-for tweet in engine.search("visualization", count=100, start=1, cached=False):
+def getTweets(n):
+	for tweet in engine.search("visualization", count=n, start=1, cached=False):
 
-	# Parse the date time field	
-	dateTime = time.strptime(tweet.date, "%a, %d %b %Y %H:%M:%S +0000")
+		# Parse the date time field	
+		dateTime = time.strptime(tweet.date, "%a, %d %b %Y %H:%M:%S +0000")
 	
-	#===========================================================================
-	# In the sample output it looks like there are fields for three hashtags
-	# and that if there are no hashtags the fields are populated with 'None'
-	#===========================================================================
-	tags = hashtags(tweet.text)
+		#===========================================================================
+		# In the sample output it looks like there are fields for three hashtags
+		# and that if there are no hashtags the fields are populated with 'None'
+		#===========================================================================
+		tags = hashtags(tweet.text)
 	
-	# Trim the list to three entries to match sample.csv
-	if (len(tags) > 3):
-		del tags[3:]
+		# Trim the list to three entries to match sample.csv
+		if (len(tags) > 3):
+			del tags[3:]
 	
 	
-	# Add 'None' for hashtag fields that are empty - match sample.csv
-	if (len(tags) == 2):
-		tags.append('None')
-	elif (len(tags) == 1):
-		tags.append('None')
-		tags.append('None')
-	elif (len(tags) == 0):
-		tags.append('None')
-		tags.append('None')
-		tags.append('None')
-	else:
-		pass
+		# Add 'None' for hashtag fields that are empty - match sample.csv
+		if (len(tags) == 2):
+			tags.append('None')
+		elif (len(tags) == 1):
+			tags.append('None')
+			tags.append('None')
+		elif (len(tags) == 0):
+			tags.append('None')
+			tags.append('None')
+			tags.append('None')
+		else:
+			pass
 	
 
 	
-	author = tweet.author.encode('ascii', 'ignore')
-	# For some reason assigning these to a variable causes errors - annoying
-	#date = str(time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'))
-	#time = str(time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore'))
-	text = re.sub('[\r\n]+','',tweet.text.encode('ascii', 'ignore'))
-	tag1 = re.sub('#','',tags[0].encode('ascii', 'ignore'))
-	tag2 = re.sub('#','',tags[1].encode('ascii', 'ignore'))
-	tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
+		author = tweet.author.encode('ascii', 'ignore')
+	
+		# For some reason assigning these to a variable causes errors - annoying
+		#date = str(time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'))
+		#time = str(time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore'))
+		text = re.sub('[\r\n]+','',tweet.text.encode('ascii', 'ignore'))
+		tag1 = re.sub('#','',tags[0].encode('ascii', 'ignore'))
+		tag2 = re.sub('#','',tags[1].encode('ascii', 'ignore'))
+		tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
 
 
-	print author + "," + \
+		print author + "," + \
 		  time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore') + "," + \
 		  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore') + "," + \
 		  text + "," + tag1 + "," + tag2 + "," + tag3
 
 
-	# Create a unique ID based on the tweet content and author.
-	id = str(hash(tweet.author + tweet.text))
+		# Create a unique ID based on the tweet content and author.
+		id = str(hash(tweet.author + tweet.text))
 	
-    # Only add the tweet to the table if it doesn't already contain this ID.  
-    # This can give results less than 100.
-	if len(table) == 0 or id not in index:
-		table.append([author, time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'), \
+    	# Only add the tweet to the table if it doesn't already contain this ID.  
+     	# This can give results less than 100.
+		if len(table) == 0 or id not in index:
+			table.append([author, time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'), \
 					  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore'), \
 					  text, tag1, tag2, tag3])
-		index[id] = True
+			index[id] = True
 
-table.save("twitter_output.csv")
+		table.save("twitter_output.csv")
+
+
+getTweets(100)
+
+if (len(table) < 100):
+	getTweets(100 - len(table))
 
