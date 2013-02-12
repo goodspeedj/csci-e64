@@ -24,6 +24,17 @@
 	
 # 5) Make sure we can read your code!
 
+
+#*******************************************************************************
+# 
+# This file is heavily based on the 03-twitter.py file.  Fields and order were
+# changed as well as the date/time format and the hashtag output.  The method of
+# writing the file and the use of the index to keep track of the unique tweets
+# is from 03-twitter.py.
+#
+#*******************************************************************************
+
+
 import os, sys; sys.path.insert(0, os.path.join("..", ".."))
 import unicodedata, time, re, csv
 
@@ -91,9 +102,7 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 	else:
 		pass
 	
-	
-	
-	
+
 	
 	author = tweet.author.encode('ascii', 'ignore')
 	# For some reason assigning these to a variable causes errors - annoying
@@ -104,6 +113,7 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 	tag2 = re.sub('#','',tags[1].encode('ascii', 'ignore'))
 	tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
 
+
 	print tweet.author.encode('ascii', 'ignore') + "," + \
 		  time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore') + "," + \
 		  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore') + "," + \
@@ -111,13 +121,13 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 		  tags[0].encode('ascii', 'ignore') + "," + \
 		  tags[1].encode('ascii', 'ignore') + "," + \
 		  tags[2].encode('ascii', 'ignore')
-		  
 
-	#print hashtags(tweet.text) # Keywords in tweets start with a #.
 
 	# Create a unique ID based on the tweet content and author.
 	id = str(hash(tweet.author + tweet.text))
-    # Only add the tweet to the table if it doesn't already contain this ID.
+	
+    # Only add the tweet to the table if it doesn't already contain this ID.  
+    # This can give results less than 100.
 	if len(table) == 0 or id not in index:
 		table.append([author, time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'), \
 					  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore'), \
@@ -126,15 +136,3 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 
 table.save("twitter_output.csv")
 
-print "Total results:", len(table)
-print
-
-# Print all the rows in the table.
-# Since it is stored as a file it can grow comfortably each time the script runs.
-# We can also open the table later on, in other scripts, for further analysis.
-#pprint(table)
-
-# Note: you can also search tweets by author:
-# Twitter().search("from:tom_de_smedt")
-
-#print Twitter().search("from:christiestep527")[0].text
