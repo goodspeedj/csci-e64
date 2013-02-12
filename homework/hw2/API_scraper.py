@@ -114,13 +114,10 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 	tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
 
 
-	print tweet.author.encode('ascii', 'ignore') + "," + \
+	print author + "," + \
 		  time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore') + "," + \
 		  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore') + "," + \
-		  tweet.text.encode('ascii', 'ignore') + "," + \
-		  tags[0].encode('ascii', 'ignore') + "," + \
-		  tags[1].encode('ascii', 'ignore') + "," + \
-		  tags[2].encode('ascii', 'ignore')
+		  text + "," + tag1 + "," + tag2 + "," + tag3
 
 
 	# Create a unique ID based on the tweet content and author.
