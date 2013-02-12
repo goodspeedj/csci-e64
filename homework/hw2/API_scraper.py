@@ -108,7 +108,7 @@ for tweet in engine.search("visualization", count=100, start=1, cached=False):
 	# For some reason assigning these to a variable causes errors - annoying
 	#date = str(time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore'))
 	#time = str(time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore'))
-	text = tweet.text.encode('ascii', 'ignore')
+	text = re.sub('[\r\n]+','',tweet.text.encode('ascii', 'ignore'))
 	tag1 = re.sub('#','',tags[0].encode('ascii', 'ignore'))
 	tag2 = re.sub('#','',tags[1].encode('ascii', 'ignore'))
 	tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
