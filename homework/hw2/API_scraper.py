@@ -80,10 +80,10 @@ def getTweets(n):
 		# Parse the date time field	
 		dateTime = time.strptime(tweet.date, "%a, %d %b %Y %H:%M:%S +0000")
 	
-		#===========================================================================
+		#=======================================================================
 		# In the sample output it looks like there are fields for three hashtags
 		# and that if there are no hashtags the fields are populated with 'None'
-		#===========================================================================
+		#=======================================================================
 		tags = hashtags(tweet.text)
 	
 		# Trim the list to three entries to match sample.csv
@@ -104,8 +104,7 @@ def getTweets(n):
 		else:
 			pass
 	
-
-	
+		# Setup variables for the fields
 		author = tweet.author.encode('ascii', 'ignore')
 	
 		# For some reason assigning these to a variable causes errors - annoying
@@ -116,12 +115,12 @@ def getTweets(n):
 		tag2 = re.sub('#','',tags[1].encode('ascii', 'ignore'))
 		tag3 = re.sub('#','',tags[2].encode('ascii', 'ignore'))
 
-
+		"""
 		print author + "," + \
 		  time.strftime('%m/%d/%y', dateTime).encode('ascii', 'ignore') + "," + \
 		  time.strftime('%H:%M:%S', dateTime).encode('ascii','ignore') + "," + \
 		  text + "," + tag1 + "," + tag2 + "," + tag3
-
+		"""
 
 		# Create a unique ID based on the tweet content and author.
 		id = str(hash(tweet.author + tweet.text))
@@ -137,8 +136,14 @@ def getTweets(n):
 		table.save("twitter_output.csv")
 
 
+
+#===============================================================================
+# Start main processing
+#===============================================================================
 getTweets(100)
 
+# If we got back less than 100 results due to duplicates run it again so we end
+# up with 100 results in the table
 if (len(table) < 100):
 	getTweets(100 - len(table))
 
