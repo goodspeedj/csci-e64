@@ -142,8 +142,9 @@ def getTweets(n):
 #===============================================================================
 getTweets(100)
 
-# If we got back less than 100 results due to duplicates run it again so we end
-# up with 100 results in the table
-if (len(table) < 100):
+# If we got back less than 100 results due to duplicates run it up to 10 more 
+# times to try and get to 100
+count = 0
+while (len(table) < 100 and count < 10):
 	getTweets(100 - len(table))
-
+	count = count + 1
