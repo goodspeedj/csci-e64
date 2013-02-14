@@ -172,6 +172,8 @@ for e in allElements:
         
         # Write out the lines of the file
         writer.writerow([title,runtime,genresStr,directorsStr,writersStr,actorsStr,rating,ratingCnt])
-        print title + "," + runtime + "," + genresStr + "," + directorsStr + "," + writersStr + "," + actorsStr + "," + rating + "," + ratingCnt
+        
+        # Uncomment the following to see the output printed to the console
+        #print title + "," + runtime + "," + genresStr + "," + directorsStr + "," + writersStr + "," + actorsStr + "," + rating + "," + ratingCnt
         
 output.close()
