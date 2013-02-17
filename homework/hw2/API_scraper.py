@@ -87,8 +87,8 @@ def getTweets(n):
 		tags = hashtags(tweet.text)
 	
 		# Trim the list to three entries to match sample.csv
-		if (len(tags) > 3):
-			del tags[3:]
+		#if (len(tags) > 3):
+		#	del tags[3:]
 	
 	
 		# Add 'None' for hashtag fields that are empty - match sample.csv
