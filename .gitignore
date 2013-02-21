@@ -2,5 +2,5 @@
 .pydevproject
 .metadata
 .git
-
+tmp
 .DS_Store
