@@ -4,8 +4,8 @@ wget=`which wget`
 xpath=`which xpath`
 
 # Download the xml files from the NYTimes
-for zip in `cat metadata/zips.txt`
-do 
+for zip in `awk -F, '{ print $1 }' ../data/NHZips.csv`
+do
     `$wget -O xmldata/$zip.xml http://api.nytimes.com/svc/elections/us/v3/finances/2012/president/zips/$zip.xml?api-key=61cbba8d89e40fd80008ba748895e96e:15:66713519`;
 done
 
