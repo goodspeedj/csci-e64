@@ -11,3 +11,16 @@ http://geocoder.us/help/city_state_zip.shtml
 
 USE THIS ONE FOR ZIPS AND LAT LONG - just need to filter for NH
 http://federalgovernmentzipcodes.us/
+
+Download this raw file: http://federalgovernmentzipcodes.us/free-zipcode-database-Primary.csv
+
+Remove quotes = sed 's/\"//g'
+Strip out non-NH states
+
+get API data
+need to install perl XML::XPath
+
+
+*** NOTES ***
+Change luminance and shape - provides separate channels vs. integral
+talk about C.R.A.P. principals and potentiall gestalt (grouping similarity etc)
