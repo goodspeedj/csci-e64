@@ -1,7 +1,0 @@
-.project
-.pydevproject
-.metadata
-.git
-tmp
-.DS_Store
-project/p1/data/*.xml
