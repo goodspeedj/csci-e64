@@ -4,4 +4,4 @@
 .git
 tmp
 .DS_Store
-projects/p1/data/*.xml
+project/p1/data/*.xml
