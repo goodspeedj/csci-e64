@@ -24,3 +24,12 @@ need to install perl XML::XPath
 *** NOTES ***
 Change luminance and shape - provides separate channels vs. integral
 talk about C.R.A.P. principals and potentiall gestalt (grouping similarity etc)
+
+lxml for xpath processing
+
+generateCSV.py to create the NHZips data and per capita data
+ those two files combined in google fusion tables
+
+Need to remove records that don't have per capita
+
+
