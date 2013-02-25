@@ -32,4 +32,11 @@ generateCSV.py to create the NHZips data and per capita data
 
 Need to remove records that don't have per capita
 
+Had to combine some records that had separate zip codes, but were not thier own towns (i.e. Rye Beach into Rye, Silver Lake into Madison), elkins to new london, etna to hanover, georges mills to sunapee, grafton iron works to grafton, removed intervale (unincorporated), kearsarge to wilmont, lyme center to lyme, mirror lake to tuftonboro, north haverhill to haverhill, south tamworth to tamworth, spofford to chesterfield, west lebannon to lebannon, wonalancet to tamworth, combined multiple entries for concord, dover, hampton, keene, laconia, lebanon, manchester, nashua, portsmouth, rochester, tilton
+
+
+
+
+
+
 
