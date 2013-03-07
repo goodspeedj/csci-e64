@@ -12,20 +12,19 @@
 				float: left;
 				width: 175px;
 				height: 100%;
-				padding: 10px;
-				margin: 15px;
-				background: #F6F6F6;
+				padding-left: 10px;
+				margin-top: 10px;
+				margin-left: 8px;
 				background: url(img/wiki.png) no-repeat;
+				border-right: 1px solid #BFD1DD;
 			}
 			#leftPaneText {
 				position: absolute;
 				top: 170px;
 			}
 			#topBar {
-				width: 100%;
 				height: 75px;
 				padding: 10px;
-				background: #B3B4B6;
 			}
 			ul#tabsleft {
 				list-style-type: none;
@@ -77,11 +76,11 @@
 			}
 			#content {
 				height: 100%;
-				width:90%;
-				background: #EDF4FA;
+				width:80%;
 				margin-left: 200px;
 				margin-right: 0px;
 				padding: 10px;
+				border-top: 1px solid gray;
 			}
 			.title {
 				font-size: 1.6em;
@@ -97,10 +96,53 @@
 			.italic {
 				font-style: italic;
 			}
+			.bold {
+				font-weight: bold;
+			}
 			.citation {
 				border: 1px solid gray;
-				margin-left: 200px;
-				margin-right:;
+				border-left: 10px solid orange;
+				margin-left: 100px;
+				padding: 10px;
+			}
+			.text-top {
+				vertical-align:text-top;
+				float: left;
+				position: relative;
+				padding-right: 10px;
+			}
+			.contents {
+				border: 1px solid gray;
+				float: left;
+				position: relative;
+				padding: 10px;
+				margin-left: 20px;
+				background: #F9F9F9;
+			}
+			.example-img {
+				float: right;
+				position: relative;
+				margin-left: 10px;
+				padding: 5px;
+				border: 1px solid gray;
+			}
+			.sm-sub-heading {
+				font-size: 20px;
+				margin: 20px;
+				margin-top: 200px;
+				border-bottom: 1px solid gray;
+				position: relative;
+				width: 700px;
+			}
+			.sub-heading {
+				font-size: 20px;
+				margin: 20px;
+				border-bottom: 1px solid gray;
+				position: relative;
+				width: 95%;
+			}
+			.caption {
+				font-size: 10px;
 			}
 		</style>
 	</head>
@@ -114,10 +156,13 @@
 				<a href="">Random article</a><br />
 				<a href="">Donate to Wikipedia</a><br />
 				<a href="">Wikimedia Shop</a><br />
+				...<br />
+				...<br />
+				...<br />
 			</div>
 		</div>
 		<div id="topBar">
-			<p class="login">Create Account  Log in
+			<p class="login">Create Account  <img src="">Log in</p>
 			<ul id="tabsleft">
 				<li>Article</li>
 				<li>Talk</li>
@@ -135,12 +180,48 @@
 			<h1 class="title">Lorem ipsum</h1>
 			<p class="text">From Wikipedia, the free encyclopedia</p>
 			<p class="indent italic">"Ipsum" redirects here. For the car, see Toyota Ipsum.</p>
-			<p class="text citation">This article needs additional citations for verification. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed. (April 2012)
+			<p class="text citation">
+				<img src="img/50px-Question_book-new.svg.png" class="text-top">
+				This article <span class="bold">needs additional citations for verification.</span> Please help <a href="">improve this article</a>by <a href="">adding citations to reliable sources.</a> Unsourced material may be <a href="">challenged</a> and <a href="">removed.</a> (April 2012)
+			</p>
+			<span class="example-img">
+				<img src="img/300px-Lorem_ipsum_design.svg.png">
+				<span class="caption">
+					<br>Using lorem ipsum to focus attention on graphic elements in a <br>webpage design proposal
+				</span>
+			</span>
 			<p class="text">In publishing and graphic design, lorem ipsum[1] is placeholder text (filler text) commonly used to demonstrate the graphic 
 				elements of a document or visual presentation, such as font, typography, and layout, by removing the distraction of meaningful content. 
 				The lorem ipsum text is typically a section of a Latin text by Cicero with words altered, added and removed that make it nonsensical in 
 				meaning and not proper Latin.[1]
 			</p>
+			<p class="contents">
+				<span class="bold">Contents</span>
+				<br>1 Example Text
+				<br>2 History and discovery
+				<br>3 English translation
+				<br>4 Variations
+				<br>5 See also
+				<br>6 References
+				<br>7 External links
+			</p>
+			
+			<p class="sm-sub-heading">
+				Example Text
+			</p>
+			<p class="text">A common form of lorem ipsum text reads as follows:</p>
+			<p class="indent text">
+					Lorem ipsum dolor sit amet...<br />
+			</p>
+			<p class="text">...</p>
+			<p class="text">...</p>
+			<p class="text">...</p>
+			<p class="sub-heading">
+				Addt'l sub-headings
+			</p>
+			<p class="text">...</p>
+			<p class="text">...</p>
+			<p class="text">...</p>
 		</div>
 	</body>
 </html>
