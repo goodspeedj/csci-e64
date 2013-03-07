@@ -1,150 +1,7 @@
 <html>
 	<head>
 		<title></title>
-		<style>
-			body {
-				font-family: sans-serif;
-				font-size: 13px;
-				padding: 0px;
-				margin: 0px;
-			}
-			#leftPane {
-				float: left;
-				width: 175px;
-				height: 100%;
-				padding-left: 10px;
-				margin-top: 10px;
-				margin-left: 8px;
-				background: url(img/wiki.png) no-repeat;
-				border-right: 1px solid #BFD1DD;
-			}
-			#leftPaneText {
-				position: absolute;
-				top: 170px;
-			}
-			#topBar {
-				height: 75px;
-				padding: 10px;
-			}
-			ul#tabsleft {
-				list-style-type: none;
-				margin: 0;
-				position: absolute;
-				top: 65px;
-				left: 155px;
-				height: 100px;
-			}
-			ul#tabsright {
-				list-style-type: none;
-				margin: 0;
-				position: absolute;
-				top: 65px;
-				right: 200px;
-				height: 100px;
-			}
-			ul li {
-				float: left;
-				height: 20px;
-				margin: 0px;
-				padding: 5px;
-				border-right: 1px solid #C7D9E5;
-			}
-			a:link {
-				color: #283E78;
-				text-decoration: none;
-			}
-			a:visited {
-				color: #220823;
-				text-decoration: none;
-			}
-			a:hover {
-				text-decoration: underline;
-			}
-			a:active {
-				color: #F18500;
-				text-decoration: underline;
-			}
-			.login {
-				position: absolute;
-				right: 0px;
-				width: 150px;
-			}
-			.search {
-				position: absolute;
-				right: 40px;
-				top: 65px;
-			}
-			#content {
-				height: 100%;
-				width:80%;
-				margin-left: 200px;
-				margin-right: 0px;
-				padding: 10px;
-				border-top: 1px solid gray;
-			}
-			.title {
-				font-size: 1.6em;
-				margin: 20px;
-				border-bottom: 1px solid gray;
-			}
-			.text {
-				margin: 20px;
-			}
-			.indent {
-				text-indent: 50px;
-			}
-			.italic {
-				font-style: italic;
-			}
-			.bold {
-				font-weight: bold;
-			}
-			.citation {
-				border: 1px solid gray;
-				border-left: 10px solid orange;
-				margin-left: 100px;
-				padding: 10px;
-			}
-			.text-top {
-				vertical-align:text-top;
-				float: left;
-				position: relative;
-				padding-right: 10px;
-			}
-			.contents {
-				border: 1px solid gray;
-				float: left;
-				position: relative;
-				padding: 10px;
-				margin-left: 20px;
-				background: #F9F9F9;
-			}
-			.example-img {
-				float: right;
-				position: relative;
-				margin-left: 10px;
-				padding: 5px;
-				border: 1px solid gray;
-			}
-			.sm-sub-heading {
-				font-size: 20px;
-				margin: 20px;
-				margin-top: 200px;
-				border-bottom: 1px solid gray;
-				position: relative;
-				width: 700px;
-			}
-			.sub-heading {
-				font-size: 20px;
-				margin: 20px;
-				border-bottom: 1px solid gray;
-				position: relative;
-				width: 95%;
-			}
-			.caption {
-				font-size: 10px;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
 		<div id="leftPane">
@@ -164,13 +21,13 @@
 		<div id="topBar">
 			<p class="login">Create Account  <img src="">Log in</p>
 			<ul id="tabsleft">
-				<li>Article</li>
-				<li>Talk</li>
+				<li class="tabs">Article</li>
+				<li class="tabs">Talk</li>
 			</ul>
 			<ul id="tabsright">
-				<li>Read</li>
-				<li>Edit</li>
-				<li>View History</li>
+				<li class="tabs">Read</li>
+				<li class="tabs">Edit</li>
+				<li class="tabs">View History</li>
 			</ul>
 			<form class="search">
 				<input type="text" name="search" placeholder="Search">
@@ -205,23 +62,29 @@
 				<br>6 References
 				<br>7 External links
 			</p>
-			
+
 			<p class="sm-sub-heading">
 				Example Text
 			</p>
 			<p class="text">A common form of lorem ipsum text reads as follows:</p>
 			<p class="indent text">
 					Lorem ipsum dolor sit amet...<br />
-			</p>
-			<p class="text">...</p>
-			<p class="text">...</p>
-			<p class="text">...</p>
-			<p class="sub-heading">
-				Addt'l sub-headings
-			</p>
-			<p class="text">...</p>
-			<p class="text">...</p>
-			<p class="text">...</p>
+			<p class="text">More text</p>
+			<p class="text">Blah, blah blah</p>
+		</div>
+		<div id="footer">
+			<p class="footerText">This page was last modified on 21 February 2013 at 19:18.</p>
+			<p class="footerText">Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply. See Terms of Use for details.
+			<p class="footerText">Wikipedia&#64; is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.</p>
+			<p class="footerText"><a href="">Contact Us</a></p>
+			<ul>
+				<li><a href="">Privacy Policy</a></li>
+				<li><a href="">About Wikipedia</a></li>
+				<li><a href="">Disclaimers</a></li>
+				<li><a href="">Mobile view</a></li>
+			</ul>
+			<img src="img/poweredby_mediawiki_88x31.png" class="footerButton">
+			<img src="img/wikimedia-button.png" class="footerButton">
 		</div>
 	</body>
 </html>
