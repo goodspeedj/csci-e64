@@ -16,7 +16,6 @@ body {
 	height: 150px;
 	padding: 10px;
 	margin-left: 10px;
-	background: url(img/wiki.png) no-repeat #F7F7F7;
 }
 
 #leftPane {
@@ -26,8 +25,7 @@ body {
 	padding-left: 10px;
 	margin-top: 10px;
 	margin-left: 8px;
-	background: url(img/wiki.png) no-repeat #F7F7F7;
-	border-right: 1px solid #BFD1DD;
+	
 }
 
 #content {
@@ -38,6 +36,7 @@ body {
 	padding: 10px;
 	border-top: 1px solid gray;
 	border-bottom: 1px solid gray;
+	border-left: 1px solid #BFD1DD;
 }
 
 #footer {
