@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="application/javascript">
+    
+      function draw() {
+          var canvas  = document.getElementById('graph');
+
+          if (canvas.getContext) {
+              var context = canvas.getContext("2d");
+
+              // background
+              //context.fillStyle = "rgb(217,231,242)";
+              //context.fillRect (0,0,800,600);
+
+              context.beginPath();
+              context.moveTo(100, 150);
+              context.lineTo(450, 50);
+              context.stroke();
+
+              context.beginPath();
+              context.moveTo(200, 150);
+              context.lineTo(450, 50);
+              context.stroke();
+          }
+          else {
+              alert("Browser does not support canvas.");
+          }
+      }
+      
+    </script>
+  </head>
+
+  <body onload="draw();">
+    
+    <div id="container">
+      <canvas id="graph" width="800" height="600"></canvas>
+    </div>
+
+  </body>
+</html>
