@@ -7,9 +7,31 @@
   </head>
 
   <body onload="drawBackground();">
+
+    <header>
+      <div id="header">
+        CS 171/CSCI E-64: Visualization<br />
+        Homework 5, Problem 2: Web Visualization
+      </div>
+      <div id="name">
+        James Goodspeed - jgoodsp@fas.harvard.edu
+      </div>
+    </header>
+
+    <div id="description">
+      <p>
+        The following stock ticker graph shows the opening price of Bottomline 
+        Technologies and Facebook over the past ten days.  The 'comment' field 
+        consists of the volume on a given day.
+      </p>
+    </div>
     
     <div id="container">
       <canvas id="background" width="800" height="600"></canvas>
+    </div>
+
+    <div id="control">
+
     </div>
 
     <!-- Facebook stock price data -->
@@ -133,6 +155,9 @@
       }
 
 
+      /*
+       * Get the Y axis minimum
+       */
       function getYMin() {
           var min = 99999;
 
@@ -167,8 +192,12 @@
       }
 
 
+      /*
+       * Draw the line coresponding to the JSON data
+       */
       function drawJSONLine(context) {
           var startX = 30;
+          var visibleJSON = true;
 
           context.beginPath();
 
@@ -182,12 +211,24 @@
               context.lineTo(startX, y);
           }
 
+          if (visibleJSON == true) {
+              context.strokeStyle = '#377EB8';
+          }
+          else {
+              context.strokeStyle = '#E41A1C';
+          }
+          
+          context.lineWidth = 3;
           context.stroke();
           
       }
 
 
+      /*
+       * Draw the line coresponding to the CSV data
+       */
       function drawCSVLine(context) {
+          var visibleCSV = true;
           var startX = 30;
           var csvRows = data_csv.split(/\n/);
           var rowOne = csvRows[1].split(",");
@@ -205,12 +246,51 @@
 
               context.lineTo(startX, y);
           }
-
+          
+          if (visibleCSV == true) {
+              context.strokeStyle = '#4DAF4A';
+          }
+          else {
+              context.strokeStyle = '#FFFFFF';
+          }
+          
+          context.lineWidth = 3;
           context.stroke();
+
+      }
+
+
+      /*
+       * Draw the graph key
+       */
+      function drawKey(context) {
+
+          // facebook
+          context.beginPath();
+          context.moveTo(0, 450);
+          context.lineTo(40, 450);
+          context.strokeStyle = '#4DAF4A';
+          context.lineWidth = 7;
+          context.stroke();
+
+          context.fillText("Facebook", 55, 452);
+
+          // bottomline
+          context.beginPath();
+          context.moveTo(0, 470);
+          context.lineTo(40, 470);
+          context.strokeStyle = '#377EB8';
+          context.lineWidth = 7;
+          context.stroke();
+
+          context.fillText("Bottomline Technologies", 55, 472);
 
       }
     
 
+      /*
+       * Draw the background canvas
+       */
       function drawBackground() {
           getYMax();
 
@@ -241,9 +321,18 @@
                   yLabel -= 40;
               }
 
-              drawJSONLine(context);
-              drawCSVLine(context);
+              /*
+              if (visibleCSV == true && visibleJSON == false) {
+                  drawCSVLine(context);
+              }
+              else if (visibleJSON == true && visibleCSV == false) {
+                  drawJSONLine(context);
+              }
+              */
               
+              drawCSVLine(context);
+              drawJSONLine(context);
+              drawKey(context);
 
 
           }
