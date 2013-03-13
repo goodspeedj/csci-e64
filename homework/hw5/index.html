@@ -3,27 +3,208 @@
   <head>
     <title></title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="application/javascript">
     
-      function draw() {
-          var canvas  = document.getElementById('graph');
+  </head>
+
+  <body onload="drawBackground();">
+    
+    <div id="container">
+      <canvas id="background" width="800" height="600"></canvas>
+    </div>
+
+    <!-- Facebook stock price data -->
+    <textarea id="csv">
+      SYMBOL,OPEN,DATE,NORMDATE,VOLUME
+      FB,28.01,02/26,1,31579420
+      FB,27.34,02/27,2,44203880
+      FB,26.84,02/28,3,82952930
+      FB,27.05,03/01,4,54032140
+      FB,27.76,03/04,5,32363520
+      FB,27.88,03/05,6,40184170
+      FB,28.10,03/06,7,33464760
+      FB,27.57,03/07,8,74408360
+      FB,28.43,03/08,9,44161320
+      FB,28.01,03/11,10,35585960
+    </textarea>
+
+    <textarea id="json">
+      [
+          { 
+            "OPEN": "26.28",
+            "DATE": "02/26",
+            "NORMDATE": "1",
+            "VOLUME": "443842" 
+          },
+
+          { 
+            "OPEN": "26.70",
+            "DATE": "02/27",
+            "NORMDATE": "2",
+            "VOLUME": "343179"
+          },
+          {
+            "OPEN": "27.20",
+            "DATE": "02/28",
+            "NORMDATE": "3",
+            "VOLUME": "262821"
+          },
+          {
+            "OPEN": "26.90",
+            "DATE": "03/01",
+            "NORMDATE": "4",
+            "VOLUME": "297274"
+          },
+          {
+            "OPEN": "27.47",
+            "DATE": "03/04",
+            "NORMDATE": "5",
+            "VOLUME": "321933"
+          },
+          {
+            "OPEN": "27.38",
+            "DATE": "03/05",
+            "NORMDATE": "6",
+            "VOLUME": "278871"
+          },
+          {
+            "OPEN": "27.60",
+            "DATE": "03/06",
+            "NORMDATE": "7",
+            "VOLUME": "309123"
+          },
+          {
+            "OPEN": "28.53",
+            "DATE": "03/07",
+            "NORMDATE": "8",
+            "VOLUME": "425037"
+            },
+            {
+            "OPEN": "28.33",
+            "DATE": "03/08",
+            "NORMDATE": "9",
+            "VOLUME": "359761"
+            },
+            {
+            "OPEN": "28.16",
+            "DATE": "03/11",
+            "NORMDATE": "10",
+            "VOLUME": "155354"
+            }
+          ]
+    </textarea>
+    <script type="application/javascript">
+
+      var data_csv  = document.getElementById("csv").value;
+      var data_json = document.getElementById("json").value;
+      var json      = JSON.parse(data_json);
+
+      /*
+       *  Gets the max value of the Y axis
+       */
+      function getYMax() {
+          var max = 0;
+
+          // Get the max from the json data
+          for (i in json) {
+              if (max < json[i].OPEN) {
+                  max = json[i].OPEN;
+              }
+          }
+
+          var csvRows = data_csv.split(/\n/);
+
+          // get the max from the csv data
+          for (var j = 1; j < csvRows.length; j++) {
+              var row = csvRows[j].split(",");
+              var price = row[1];
+
+              if (max < price) {
+                  max = price;
+              }
+          }
+
+          // make sure max is a number
+          max = parseFloat(max);
+
+          // pad the max a bit
+          max = max + 5;
+
+          return max;
+      }
+
+
+      function getYMin() {
+          var min = 99999;
+
+          // Get the min from the json data
+          for (i in json) {
+              if (min > json[i].OPEN) {
+                  min = json[i].OPEN;
+              }
+          }
+
+          var csvRows = data_csv.split(/\n/);
+
+          // get the min from the csv data
+          for (var j = 1; j < csvRows.length; j++) {
+              var row = csvRows[j].split(",");
+              var price = row[1];
+
+              if (min > price) {
+                  min = price;
+              }
+          }
+
+          // make sure max is a number
+          min = parseFloat(min);
+
+          // pad the max a bit
+          min = min - 5;
+
+          return min;
+
+
+      }
+
+
+      function drawJSONLine(context) {
+          context.beginPath();
+          context.moveTo();
+      }
+    
+      function drawBackground() {
+          getYMax();
+
+          var canvas    = document.getElementById("background");
+          
 
           if (canvas.getContext) {
               var context = canvas.getContext("2d");
 
-              // background
-              //context.fillStyle = "rgb(217,231,242)";
-              //context.fillRect (0,0,800,600);
-
+              // x and y axis
               context.beginPath();
-              context.moveTo(100, 150);
-              context.lineTo(450, 50);
+              context.moveTo(30, 10);
+              context.lineTo(30, 400);
+              context.lineTo(600,400);
               context.stroke();
 
-              context.beginPath();
-              context.moveTo(200, 150);
-              context.lineTo(450, 50);
-              context.stroke();
+              // Add text to X axis
+              var xLabel = 30;
+              for (i in json) {
+                  context.fillText(json[i].DATE, xLabel, 420);
+                  xLabel += 60;
+              }
+
+              // Add text to Y axis
+              var yLabel = 400;
+              var div = (getYMax() - getYMin()) / 400;
+              alert(div); 
+              for (var j = getYMin(); j < getYMax(); j++) {
+                  context.fillText(j, 0, yLabel);
+                  yLabel -= 40;
+              }
+
+
           }
           else {
               alert("Browser does not support canvas.");
@@ -31,13 +212,5 @@
       }
       
     </script>
-  </head>
-
-  <body onload="draw();">
-    
-    <div id="container">
-      <canvas id="graph" width="800" height="600"></canvas>
-    </div>
-
   </body>
 </html>

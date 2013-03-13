@@ -1,0 +1,142 @@
+[
+	{
+		"SYMBOL": "FB",
+		"OPEN": "28.01",
+		"DATE": "02262013",
+		"NORMDATE": "1",
+		"VOLUME": "31579420"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "27.34",
+		"DATE": "02272013",
+		"NORMDATE": "2",
+		"VOLUME": "44203880"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "26.84",
+		"DATE": "02282013",
+		"NORMDATE": "3",
+		"VOLUME": "82952930"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "27.05",
+		"DATE": "03012013",
+		"NORMDATE": "4",
+		"VOLUME": "54032140"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "27.76",
+		"DATE": "03042013",
+		"NORMDATE": "5",
+		"VOLUME": "32363520"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "27.88",
+		"DATE": "03052013",
+		"NORMDATE": "6",
+		"VOLUME": "40184170"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "28.10",
+		"DATE": "03062013",
+		"NORMDATE": "7",
+		"VOLUME": "33464760"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "27.57",
+		"DATE": "03072013",
+		"NORMDATE": "8",
+		"VOLUME": "74408360"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "28.43",
+		"DATE": "03082013",
+		"NORMDATE": "9",
+		"VOLUME": "44161320"
+	},
+	{
+		"SYMBOL": "FB",
+		"OPEN": "28.01",
+		"DATE": "03112013",
+		"NORMDATE": "10",
+		"VOLUME": "35585960"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "26.28",
+		"DATE": "02262013",
+		"NORMDATE": "1",
+		"VOLUME": "443842"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "26.70",
+		"DATE": "02272013",
+		"NORMDATE": "2",
+		"VOLUME": "343179"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "27.20",
+		"DATE": "02282013",
+		"NORMDATE": "3",
+		"VOLUME": "262821"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "26.90",
+		"DATE": "03012013",
+		"NORMDATE": "4",
+		"VOLUME": "297274"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "27.47",
+		"DATE": "03042013",
+		"NORMDATE": "5",
+		"VOLUME": "321933"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "27.38",
+		"DATE": "03052013",
+		"NORMDATE": "6",
+		"VOLUME": "278871"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "27.60",
+		"DATE": "03062013",
+		"NORMDATE": "7",
+		"VOLUME": "309123"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "28.53",
+		"DATE": "03072013",
+		"NORMDATE": "8",
+		"VOLUME": "425037"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "28.33",
+		"DATE": "03082013",
+		"NORMDATE": "9",
+		"VOLUME": "359761"
+	},
+	{
+		"SYMBOL": "EPAY",
+		"OPEN": "28.16",
+		"DATE": "03112013",
+		"NORMDATE": "10",
+		"VOLUME": "155354"
+	}
+]

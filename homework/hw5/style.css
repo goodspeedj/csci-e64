@@ -1,11 +1,10 @@
-canvas {
-    width: 800px;
-    height: 600px;
-    text-align: center;
-    margin:100px;
+textarea {
+	visibility: hidden;
 }
 
 #container {
     text-align: center;
     width: 100%;
+    margin: 20px;
+    margin-top: 50px;
 }
