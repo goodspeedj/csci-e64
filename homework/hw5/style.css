@@ -20,7 +20,7 @@ textarea {
 }
 
 #control {
-	
+
 }
 
 #container {
@@ -28,4 +28,11 @@ textarea {
     width: 100%;
     margin: 20px;
     margin-top: 50px;
+}
+
+canvas {
+	position: absolute;
+	left: 150px;
+	top: 150px;
+	z-index: 1;
 }

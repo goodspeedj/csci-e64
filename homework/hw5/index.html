@@ -27,7 +27,8 @@
     </div>
     
     <div id="container">
-      <canvas id="background" width="800" height="600"></canvas>
+      <canvas id="background" width="620" height="600"></canvas>
+      <canvas id="foreground" width="620" height="600" onmousemove="drawForeground(event, this);"></canvas>
     </div>
 
     <div id="control">
@@ -286,6 +287,24 @@
           context.fillText("Bottomline Technologies", 55, 472);
 
       }
+
+
+      /*
+       * Get the coordinates of the mouse
+       */
+      function crosshairX(event, canvas) {
+          var x = event.pageX;
+          return x - 150;
+      }
+
+
+      /*
+       * Get the coordinates of the mouse
+       */
+      function crosshairY(event, canvas) {
+          var y = event.pageY;
+          return y - 150;
+      }
     
 
       /*
@@ -338,6 +357,43 @@
           }
           else {
               alert("Browser does not support canvas.");
+          }
+      }
+
+
+      function drawForeground(event, c) {
+          var canvas = document.getElementById("foreground");
+          canvas.width = canvas.width;
+
+          if (canvas.getContext) {
+              var context = canvas.getContext("2d");
+
+              context.lineWidth = 1;
+
+              // top
+              context.beginPath();
+              context.moveTo(crosshairX(event, c), crosshairY(event, c));
+              context.lineTo(crosshairX(event, c), 10);
+              context.stroke();
+
+              // bottom
+              context.beginPath();
+              context.moveTo(crosshairX(event, c), crosshairY(event, c));
+              context.lineTo(crosshairX(event, c), 400);
+              context.stroke();
+              
+              // left
+              context.beginPath();
+              context.moveTo(crosshairX(event, c), crosshairY(event, c));
+              context.lineTo(30, crosshairY(event, c));
+              context.stroke();
+
+              // right
+              context.beginPath();
+              context.moveTo(crosshairX(event, c), crosshairY(event, c));
+              context.lineTo(600, crosshairY(event, c));
+              context.stroke();
+
           }
       }
       
