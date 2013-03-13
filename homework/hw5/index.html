@@ -169,7 +169,7 @@
 
       function drawJSONLine(context) {
           var startX = 30;
-          var startY = 40;
+
           context.beginPath();
 
           context.moveTo(startX, 400 - ((parseFloat(json[0].OPEN) - getYMin()) * 40));
@@ -177,19 +177,40 @@
 
           for (var i = 1; i < json.length; i++) {
               startX += 60;
-              //var y = parseInt(400 - parseFloat(json[i].OPEN) - startY);
-              //var y = parseInt(400 - (parseFloat(json[i].OPEN) * 10));
-              //var y = parseInt(400 - (parseFloat(json[i].OPEN) * 10));
               var y = 400 - ((parseFloat(json[i].OPEN) - getYMin()) * 40);
-              alert(y);
 
               context.lineTo(startX, y);
           }
 
-              context.stroke();
+          context.stroke();
           
       }
+
+
+      function drawCSVLine(context) {
+          var startX = 30;
+          var csvRows = data_csv.split(/\n/);
+          var rowOne = csvRows[1].split(",");
+          var firstPrice = rowOne[1];
+
+          context.beginPath();
+
+          context.moveTo(startX, 400 - ((parseFloat(firstPrice) - getYMin()) * 40));
+
+          for (var i = 2; i < csvRows.length; i++) {
+              startX += 60;
+              var row = csvRows[i].split(",");
+              var price = row[1];
+              var y = 400 - ((parseFloat(price) - getYMin()) * 40);
+
+              context.lineTo(startX, y);
+          }
+
+          context.stroke();
+
+      }
     
+
       function drawBackground() {
           getYMax();
 
@@ -221,6 +242,7 @@
               }
 
               drawJSONLine(context);
+              drawCSVLine(context);
               
 
 
