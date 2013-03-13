@@ -168,8 +168,26 @@
 
 
       function drawJSONLine(context) {
+          var startX = 30;
+          var startY = 40;
           context.beginPath();
-          context.moveTo();
+
+          context.moveTo(startX, 400 - ((parseFloat(json[0].OPEN) - getYMin()) * 40));
+
+
+          for (var i = 1; i < json.length; i++) {
+              startX += 60;
+              //var y = parseInt(400 - parseFloat(json[i].OPEN) - startY);
+              //var y = parseInt(400 - (parseFloat(json[i].OPEN) * 10));
+              //var y = parseInt(400 - (parseFloat(json[i].OPEN) * 10));
+              var y = 400 - ((parseFloat(json[i].OPEN) - getYMin()) * 40);
+              alert(y);
+
+              context.lineTo(startX, y);
+          }
+
+              context.stroke();
+          
       }
     
       function drawBackground() {
@@ -197,12 +215,13 @@
 
               // Add text to Y axis
               var yLabel = 400;
-              var div = (getYMax() - getYMin()) / 400;
-              alert(div); 
               for (var j = getYMin(); j < getYMax(); j++) {
                   context.fillText(j, 0, yLabel);
                   yLabel -= 40;
               }
+
+              drawJSONLine(context);
+              
 
 
           }
