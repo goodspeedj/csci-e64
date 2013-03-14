@@ -27,15 +27,19 @@
     </div>
     
     <div id="container">
-      <canvas id="background" width="620" height="600"></canvas>
-      <canvas id="foreground" width="620" height="600" onmousemove="drawForeground(event, this);"></canvas>
+      <canvas id="background" width="620" height="500"></canvas>
+      <canvas id="foreground" width="620" height="500" onmousemove="drawForeground(event, this);"></canvas>
     </div>
 
     <div id="control">
       <form>
-        <input type="checkbox" onclick="checked();">Bottomline Technologies</input><br />
-        <input type="checkbox">Facebook</input><br />
-        <input type="checkbox">Target</input>
+        <!--
+        <input type="checkbox" id="EPAY" onclick="isChecked(this.id);" onchange="this.form.submit();">Bottomline Technologies<br />
+        <input type="checkbox" id="FB" onclick="isChecked(this.id);" onchange="this.form.submit();">Facebook<br />
+        <input type="checkbox" id="target" onclick="isChecked(this.id);" onchange="this.form.submit();">Target<br />
+        -->
+        <input type="checkbox" onclick="isChecked(this)" id="EPAY">Bottomline Technologies (EPAY)<br />
+        <input type="checkbox" onclick="isChecked(this)" id="FB">Facebook (FB)
       </form>
     </div>
 
@@ -200,67 +204,101 @@
       /*
        * Draw the line coresponding to the JSON data
        */
-      function drawJSONLine(context) {
-          var startX = 30;
-          var visibleJSON = true;
-
-          context.beginPath();
-
-          context.moveTo(startX, 400 - ((parseFloat(json[0].OPEN) - getYMin()) * 40));
-
-
-          for (var i = 1; i < json.length; i++) {
-              startX += 60;
-              var y = 400 - ((parseFloat(json[i].OPEN) - getYMin()) * 40);
-
-              context.lineTo(startX, y);
-          }
-
-          if (visibleJSON == true) {
-              context.strokeStyle = '#377EB8';
-          }
-          else {
-              context.strokeStyle = '#E41A1C';
-          }
+      function drawJSONLine(visible) {
+          var canvas = document.getElementById("background");
           
-          context.lineWidth = 3;
-          context.stroke();
+
+          if (canvas.getContext) {
+              var context = canvas.getContext("2d");
+              var startX = 30;
+
+              context.beginPath();
+
+              context.moveTo(startX, 400 - ((parseFloat(json[0].OPEN) - getYMin()) * 40));
+
+
+              for (var i = 1; i < json.length; i++) {
+                  startX += 60;
+                  var y = 400 - ((parseFloat(json[i].OPEN) - getYMin()) * 40);
+
+                  context.lineTo(startX, y);
+              }
+
+              if (visible == true) {
+                  context.strokeStyle = '#377EB8';
+                  context.lineWidth = 3;
+              }
+              else {
+                  context.strokeStyle = '#FFFFFF';
+                  context.lineWidth = 4;
+              }
+              
+              
+              
+              context.stroke();
+          }
           
       }
+
+      function isChecked(check) {
+            alert(check);
+            if (check.checked) {
+                if (check.id == "EPAY") {
+                    drawJSONLine(true);
+                }
+                else {
+                    drawCSVLine(true);
+                }
+            }
+            else {
+                if (check.id == "EPAY") {
+                    drawJSONLine(false);
+                }
+                else {
+                    drawCSVLine(false);
+                }
+            }
+        }
 
 
       /*
        * Draw the line coresponding to the CSV data
        */
-      function drawCSVLine(context) {
-          var visibleCSV = true;
-          var startX = 30;
-          var csvRows = data_csv.split(/\n/);
-          var rowOne = csvRows[1].split(",");
-          var firstPrice = rowOne[1];
-
-          context.beginPath();
-
-          context.moveTo(startX, 400 - ((parseFloat(firstPrice) - getYMin()) * 40));
-
-          for (var i = 2; i < csvRows.length; i++) {
-              startX += 60;
-              var row = csvRows[i].split(",");
-              var price = row[1];
-              var y = 400 - ((parseFloat(price) - getYMin()) * 40);
-
-              context.lineTo(startX, y);
-          }
+      function drawCSVLine(visible) {
+          var canvas = document.getElementById("background");
           
-          if (visibleCSV == true) {
-              context.strokeStyle = '#4DAF4A';
+          if (canvas.getContext) {
+              var context = canvas.getContext("2d");
+              var startX = 30;
+              var csvRows = data_csv.split(/\n/);
+              var rowOne = csvRows[1].split(",");
+              var firstPrice = rowOne[1];
+
+              context.beginPath();
+
+              context.moveTo(startX, 400 - ((parseFloat(firstPrice) - getYMin()) * 40));
+
+              for (var i = 2; i < csvRows.length; i++) {
+                  startX += 60;
+                  var row = csvRows[i].split(",");
+                  var price = row[1];
+                  var y = 400 - ((parseFloat(price) - getYMin()) * 40);
+
+                  context.lineTo(startX, y);
+              }
+
+              if (visible == true) {
+                  context.strokeStyle = '#4DAF4A';
+                  context.lineWidth = 3;
+              }
+              else {
+                  context.strokeStyle = '#FFFFFF';
+                  context.lineWidth = 4;
+              }
+              
+
+              context.stroke();
           }
-          else {
-              context.strokeStyle = '#FFFFFF';
-          }
-          
-          context.lineWidth = 3;
-          context.stroke();
 
       }
 
@@ -317,7 +355,7 @@
       function drawBackground() {
           getYMax();
 
-          var canvas    = document.getElementById("background");
+          var canvas = document.getElementById("background");
           
 
           if (canvas.getContext) {
@@ -343,21 +381,8 @@
                   context.fillText(j, 0, yLabel);
                   yLabel -= 40;
               }
-
-              /*
-              if (visibleCSV == true && visibleJSON == false) {
-                  drawCSVLine(context);
-              }
-              else if (visibleJSON == true && visibleCSV == false) {
-                  drawJSONLine(context);
-              }
-              */
               
-              drawCSVLine(context);
-              drawJSONLine(context);
               drawKey(context);
-
-
           }
           else {
               alert("Browser does not support canvas.");
@@ -374,8 +399,10 @@
 
               context.lineWidth = 1;
 
+              // make sure the cross hair doesn't display outside boundires of the graph
               if (crosshairX(event, c) > 30 && crosshairY(event, c) < 400 && 
                   crosshairY(event, c) > 10 && crosshairX(event, c) < 600) {
+
                   // top
                   context.beginPath();
                   context.moveTo(crosshairX(event, c), crosshairY(event, c));
