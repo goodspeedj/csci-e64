@@ -32,7 +32,11 @@
     </div>
 
     <div id="control">
-
+      <form>
+        <input type="checkbox" onclick="checked();">Bottomline Technologies</input><br />
+        <input type="checkbox">Facebook</input><br />
+        <input type="checkbox">Target</input>
+      </form>
     </div>
 
     <!-- Facebook stock price data -->
@@ -370,29 +374,32 @@
 
               context.lineWidth = 1;
 
-              // top
-              context.beginPath();
-              context.moveTo(crosshairX(event, c), crosshairY(event, c));
-              context.lineTo(crosshairX(event, c), 10);
-              context.stroke();
+              if (crosshairX(event, c) > 30 && crosshairY(event, c) < 400 && 
+                  crosshairY(event, c) > 10 && crosshairX(event, c) < 600) {
+                  // top
+                  context.beginPath();
+                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                  context.lineTo(crosshairX(event, c), 10);
+                  context.stroke();
 
-              // bottom
-              context.beginPath();
-              context.moveTo(crosshairX(event, c), crosshairY(event, c));
-              context.lineTo(crosshairX(event, c), 400);
-              context.stroke();
-              
-              // left
-              context.beginPath();
-              context.moveTo(crosshairX(event, c), crosshairY(event, c));
-              context.lineTo(30, crosshairY(event, c));
-              context.stroke();
+                  // bottom
+                  context.beginPath();
+                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                  context.lineTo(crosshairX(event, c), 400);
+                  context.stroke();
+                  
+                  // left
+                  context.beginPath();
+                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                  context.lineTo(30, crosshairY(event, c));
+                  context.stroke();
 
-              // right
-              context.beginPath();
-              context.moveTo(crosshairX(event, c), crosshairY(event, c));
-              context.lineTo(600, crosshairY(event, c));
-              context.stroke();
+                  // right
+                  context.beginPath();
+                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                  context.lineTo(600, crosshairY(event, c));
+                  context.stroke();
+              }
 
           }
       }

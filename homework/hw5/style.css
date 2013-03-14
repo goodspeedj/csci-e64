@@ -20,7 +20,11 @@ textarea {
 }
 
 #control {
-
+	font-size: 12px;
+	font-family: sans-serif;
+	position: absolute;
+	left: 150px;
+	top: 650px;
 }
 
 #container {
