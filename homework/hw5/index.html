@@ -28,7 +28,7 @@
     
     <div id="container">
       <canvas id="background" width="620" height="500"></canvas>
-      <canvas id="foreground" width="620" height="500" onmousemove="drawForeground(event, this);"></canvas>
+      <canvas id="foreground" width="620" height="500" onmousemove="drawForeground(event, this, true);"></canvas>
     </div>
 
     <div id="control">
@@ -38,8 +38,9 @@
         <input type="checkbox" id="FB" onclick="isChecked(this.id);" onchange="this.form.submit();">Facebook<br />
         <input type="checkbox" id="target" onclick="isChecked(this.id);" onchange="this.form.submit();">Target<br />
         -->
-        <input type="checkbox" onclick="isChecked(this)" id="EPAY">Bottomline Technologies (EPAY)<br />
-        <input type="checkbox" onclick="isChecked(this)" id="FB">Facebook (FB)
+        <input type="checkbox" onclick="isChecked(this)" id="EPAY" checked>Bottomline Technologies (EPAY)<br />
+        <input type="checkbox" onclick="isChecked(this)" id="FB" checked>Facebook (FB)<br />
+        <input type="checkbox" onclick="isChecked(this)" id="crosshair" checked>Crosshair<br />
       </form>
     </div>
 
@@ -241,10 +242,12 @@
       }
 
       function isChecked(check) {
-            alert(check);
             if (check.checked) {
                 if (check.id == "EPAY") {
                     drawJSONLine(true);
+                }
+                else if (check.id == "crosshair") {
+                    document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, true);");
                 }
                 else {
                     drawCSVLine(true);
@@ -253,6 +256,9 @@
             else {
                 if (check.id == "EPAY") {
                     drawJSONLine(false);
+                }
+                else if (check.id == "crosshair") {
+                    document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, false);");
                 }
                 else {
                     drawCSVLine(false);
@@ -390,7 +396,7 @@
       }
 
 
-      function drawForeground(event, c) {
+      function drawForeground(event, c, visible) {
           var canvas = document.getElementById("foreground");
           canvas.width = canvas.width;
 
@@ -399,35 +405,36 @@
 
               context.lineWidth = 1;
 
-              // make sure the cross hair doesn't display outside boundires of the graph
-              if (crosshairX(event, c) > 30 && crosshairY(event, c) < 400 && 
-                  crosshairY(event, c) > 10 && crosshairX(event, c) < 600) {
+              if (visible == true) {
+                  // make sure the cross hair doesn't display outside boundires of the graph
+                  if (crosshairX(event, c) > 30 && crosshairY(event, c) < 400 && 
+                      crosshairY(event, c) > 10 && crosshairX(event, c) < 600) {
 
-                  // top
-                  context.beginPath();
-                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                  context.lineTo(crosshairX(event, c), 10);
-                  context.stroke();
+                      // top
+                      context.beginPath();
+                      context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                      context.lineTo(crosshairX(event, c), 10);
+                      context.stroke();
 
-                  // bottom
-                  context.beginPath();
-                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                  context.lineTo(crosshairX(event, c), 400);
-                  context.stroke();
-                  
-                  // left
-                  context.beginPath();
-                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                  context.lineTo(30, crosshairY(event, c));
-                  context.stroke();
+                      // bottom
+                      context.beginPath();
+                      context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                      context.lineTo(crosshairX(event, c), 400);
+                      context.stroke();
+                      
+                      // left
+                      context.beginPath();
+                      context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                      context.lineTo(30, crosshairY(event, c));
+                      context.stroke();
 
-                  // right
-                  context.beginPath();
-                  context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                  context.lineTo(600, crosshairY(event, c));
-                  context.stroke();
+                      // right
+                      context.beginPath();
+                      context.moveTo(crosshairX(event, c), crosshairY(event, c));
+                      context.lineTo(600, crosshairY(event, c));
+                      context.stroke();
+                  }
               }
-
           }
       }
       
