@@ -114,7 +114,7 @@
             "DATE": "03/11",
             "VOLUME": "155354"
           }
-        ]
+      ]
     </textarea>
 
     <script type="application/javascript">
@@ -126,8 +126,9 @@
       var yAxisLen  = 400;
       var yAxisDiv  = yAxisLen / 10;
 
+
       /*
-       *  Gets the max value of the Y axis
+       * Gets the max value of the Y axis
        */
       function getYMax() {
           var max = 0;
@@ -242,31 +243,6 @@
           
       }
 
-      function isChecked(check) {
-            if (check.checked) {
-                if (check.id == "EPAY") {
-                    drawJSONLine(true);
-                }
-                else if (check.id == "crosshair") {
-                    document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, true);");
-                }
-                else {
-                    drawCSVLine(true);
-                }
-            }
-            else {
-                if (check.id == "EPAY") {
-                    drawJSONLine(false);
-                }
-                else if (check.id == "crosshair") {
-                    document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, false);");
-                }
-                else {
-                    drawCSVLine(false);
-                }
-            }
-        }
-
 
       /*
        * Draw the line coresponding to the CSV data
@@ -292,6 +268,8 @@
                   var y = yAxisLen - ((parseFloat(price) - getYMin()) * yAxisDiv);
 
                   context.lineTo(startX, y);
+
+                  //context.fillText(row[3], startX+10, y-10, 60);
               }
 
               if (visible == true) {
@@ -308,6 +286,35 @@
           }
 
       }
+
+
+      /*
+       * Checks to see if the control panel check boxes are checked and displays based on status
+       */
+      function isChecked(check) {
+          if (check.checked) {
+              if (check.id == "EPAY") {
+                  drawJSONLine(true);
+              }
+              else if (check.id == "crosshair") {
+                  document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, true);");
+              }
+              else {
+                  drawCSVLine(true);
+              }
+          }
+          else {
+              if (check.id == "EPAY") {
+                  drawJSONLine(false);
+              }
+              else if (check.id == "crosshair") {
+                  document.getElementById("foreground").setAttribute("onmousemove", "drawForeground(event, this, false);");
+              }
+              else {
+                  drawCSVLine(false);
+              }
+            }
+        }
 
 
       /*
@@ -435,13 +442,6 @@
                       context.lineTo(xAxisLen, crosshairY(event, c));
                       context.stroke();
 
-
-                      if (crosshairY(event, c) > 50 && crosshairY(event, c) < yAxisLen) {
-                          tooltip.setPosition(crosshairY(event, c), crosshairY(event, c));
-                          tooltip.text("test");
-                          tooltip.show();
-
-                      }
                   }
               }
           }
