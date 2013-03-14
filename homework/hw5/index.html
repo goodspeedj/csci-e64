@@ -23,40 +23,42 @@
         The following stock ticker graph shows the opening price of Bottomline 
         Technologies and Facebook over the past ten days.  The 'comment' field 
         consists of the volume on a given day.
+
+        To enable/disable the data lines for each company, or the crosshair for 
+        the cursor use the checkboxes at the bottom of the page.
+      </p>
+      <p>
+        Please Note:  The line graph does not start at 0 on the Y axis.  This 
+        is typical of stock graphs, but should be called out.
       </p>
     </div>
     
     <div id="container">
       <canvas id="background" width="620" height="500"></canvas>
-      <canvas id="foreground" width="620" height="500" onmousemove="drawForeground(event, this, true);"></canvas>
+      <canvas id="foreground" width="620" height="500"></canvas>
     </div>
 
     <div id="control">
       <form>
-        <!--
-        <input type="checkbox" id="EPAY" onclick="isChecked(this.id);" onchange="this.form.submit();">Bottomline Technologies<br />
-        <input type="checkbox" id="FB" onclick="isChecked(this.id);" onchange="this.form.submit();">Facebook<br />
-        <input type="checkbox" id="target" onclick="isChecked(this.id);" onchange="this.form.submit();">Target<br />
-        -->
-        <input type="checkbox" onclick="isChecked(this)" id="EPAY" checked>Bottomline Technologies (EPAY)<br />
-        <input type="checkbox" onclick="isChecked(this)" id="FB" checked>Facebook (FB)<br />
-        <input type="checkbox" onclick="isChecked(this)" id="crosshair" checked>Crosshair<br />
+        <input type="checkbox" onclick="isChecked(this)" id="EPAY">Bottomline Technologies (EPAY)<br />
+        <input type="checkbox" onclick="isChecked(this)" id="FB">Facebook (FB)<br />
+        <input type="checkbox" onclick="isChecked(this)" id="crosshair">Crosshair<br />
       </form>
     </div>
 
     <!-- Facebook stock price data -->
     <textarea id="csv">
       SYMBOL,OPEN,DATE,NORMDATE,VOLUME
-      FB,28.01,02/26,1,31579420
-      FB,27.34,02/27,2,44203880
-      FB,26.84,02/28,3,82952930
-      FB,27.05,03/01,4,54032140
-      FB,27.76,03/04,5,32363520
-      FB,27.88,03/05,6,40184170
-      FB,28.10,03/06,7,33464760
-      FB,27.57,03/07,8,74408360
-      FB,28.43,03/08,9,44161320
-      FB,28.01,03/11,10,35585960
+      FB,28.01,02/26,31579420
+      FB,27.34,02/27,44203880
+      FB,26.84,02/28,82952930
+      FB,27.05,03/01,54032140
+      FB,27.76,03/04,32363520
+      FB,27.88,03/05,40184170
+      FB,28.10,03/06,33464760
+      FB,27.57,03/07,74408360
+      FB,28.43,03/08,44161320
+      FB,28.01,03/11,35585960
     </textarea>
 
     <textarea id="json">
@@ -64,71 +66,65 @@
           { 
             "OPEN": "26.28",
             "DATE": "02/26",
-            "NORMDATE": "1",
             "VOLUME": "443842" 
           },
 
           { 
             "OPEN": "26.70",
             "DATE": "02/27",
-            "NORMDATE": "2",
             "VOLUME": "343179"
           },
           {
             "OPEN": "27.20",
             "DATE": "02/28",
-            "NORMDATE": "3",
             "VOLUME": "262821"
           },
           {
             "OPEN": "26.90",
             "DATE": "03/01",
-            "NORMDATE": "4",
             "VOLUME": "297274"
           },
           {
             "OPEN": "27.47",
             "DATE": "03/04",
-            "NORMDATE": "5",
             "VOLUME": "321933"
           },
           {
             "OPEN": "27.38",
             "DATE": "03/05",
-            "NORMDATE": "6",
             "VOLUME": "278871"
           },
           {
             "OPEN": "27.60",
             "DATE": "03/06",
-            "NORMDATE": "7",
             "VOLUME": "309123"
           },
           {
             "OPEN": "28.53",
             "DATE": "03/07",
-            "NORMDATE": "8",
             "VOLUME": "425037"
-            },
-            {
+          },
+          {
             "OPEN": "28.33",
             "DATE": "03/08",
-            "NORMDATE": "9",
             "VOLUME": "359761"
-            },
-            {
+          },
+          {
             "OPEN": "28.16",
             "DATE": "03/11",
-            "NORMDATE": "10",
             "VOLUME": "155354"
-            }
-          ]
+          }
+        ]
     </textarea>
+
     <script type="application/javascript">
 
       var data_csv  = document.getElementById("csv").value;
       var data_json = document.getElementById("json").value;
       var json      = JSON.parse(data_json);
+      var xAxisLen  = 600;
+      var yAxisLen  = 400;
+      var yAxisDiv  = yAxisLen / 10;
 
       /*
        *  Gets the max value of the Y axis
@@ -207,6 +203,11 @@
        */
       function drawJSONLine(visible) {
           var canvas = document.getElementById("background");
+
+
+          if (visible == null) {
+              visible = true;
+          }
           
 
           if (canvas.getContext) {
@@ -215,12 +216,12 @@
 
               context.beginPath();
 
-              context.moveTo(startX, 400 - ((parseFloat(json[0].OPEN) - getYMin()) * 40));
+              context.moveTo(startX, yAxisLen - ((parseFloat(json[0].OPEN) - getYMin()) * yAxisDiv));
 
 
               for (var i = 1; i < json.length; i++) {
                   startX += 60;
-                  var y = 400 - ((parseFloat(json[i].OPEN) - getYMin()) * 40);
+                  var y = yAxisLen - ((parseFloat(json[i].OPEN) - getYMin()) * yAxisDiv);
 
                   context.lineTo(startX, y);
               }
@@ -282,13 +283,13 @@
 
               context.beginPath();
 
-              context.moveTo(startX, 400 - ((parseFloat(firstPrice) - getYMin()) * 40));
+              context.moveTo(startX, yAxisLen - ((parseFloat(firstPrice) - getYMin()) * yAxisDiv));
 
               for (var i = 2; i < csvRows.length; i++) {
                   startX += 60;
                   var row = csvRows[i].split(",");
                   var price = row[1];
-                  var y = 400 - ((parseFloat(price) - getYMin()) * 40);
+                  var y = yAxisLen - ((parseFloat(price) - getYMin()) * yAxisDiv);
 
                   context.lineTo(startX, y);
               }
@@ -317,7 +318,7 @@
           // facebook
           context.beginPath();
           context.moveTo(0, 450);
-          context.lineTo(40, 450);
+          context.lineTo(yAxisDiv, 450);
           context.strokeStyle = '#4DAF4A';
           context.lineWidth = 7;
           context.stroke();
@@ -327,7 +328,7 @@
           // bottomline
           context.beginPath();
           context.moveTo(0, 470);
-          context.lineTo(40, 470);
+          context.lineTo(yAxisDiv, 470);
           context.strokeStyle = '#377EB8';
           context.lineWidth = 7;
           context.stroke();
@@ -370,8 +371,8 @@
               // x and y axis
               context.beginPath();
               context.moveTo(30, 10);
-              context.lineTo(30, 400);
-              context.lineTo(600,400);
+              context.lineTo(30, yAxisLen);
+              context.lineTo(xAxisLen,yAxisLen);
               context.stroke();
 
               // Add text to X axis
@@ -382,10 +383,10 @@
               }
 
               // Add text to Y axis
-              var yLabel = 400;
+              var yLabel = yAxisLen;
               for (var j = getYMin(); j < getYMax(); j++) {
                   context.fillText(j, 0, yLabel);
-                  yLabel -= 40;
+                  yLabel -= yAxisDiv;
               }
               
               drawKey(context);
@@ -407,8 +408,8 @@
 
               if (visible == true) {
                   // make sure the cross hair doesn't display outside boundires of the graph
-                  if (crosshairX(event, c) > 30 && crosshairY(event, c) < 400 && 
-                      crosshairY(event, c) > 10 && crosshairX(event, c) < 600) {
+                  if (crosshairX(event, c) > 30 && crosshairY(event, c) < yAxisLen && 
+                      crosshairY(event, c) > 10 && crosshairX(event, c) < xAxisLen) {
 
                       // top
                       context.beginPath();
@@ -419,7 +420,7 @@
                       // bottom
                       context.beginPath();
                       context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                      context.lineTo(crosshairX(event, c), 400);
+                      context.lineTo(crosshairX(event, c), yAxisLen);
                       context.stroke();
                       
                       // left
@@ -431,13 +432,21 @@
                       // right
                       context.beginPath();
                       context.moveTo(crosshairX(event, c), crosshairY(event, c));
-                      context.lineTo(600, crosshairY(event, c));
+                      context.lineTo(xAxisLen, crosshairY(event, c));
                       context.stroke();
+
+
+                      if (crosshairY(event, c) > 50 && crosshairY(event, c) < yAxisLen) {
+                          tooltip.setPosition(crosshairY(event, c), crosshairY(event, c));
+                          tooltip.text("test");
+                          tooltip.show();
+
+                      }
                   }
               }
           }
       }
-      
+
     </script>
   </body>
 </html>

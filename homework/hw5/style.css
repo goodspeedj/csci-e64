@@ -16,7 +16,7 @@ textarea {
 
 #description {
 	font-size: 14px;
-	margin: 30px;
+	margin: 20px;
 }
 
 #control {
@@ -37,6 +37,6 @@ textarea {
 canvas {
 	position: absolute;
 	left: 150px;
-	top: 150px;
+	top: 155px;
 	z-index: 1;
 }
