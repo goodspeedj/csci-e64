@@ -1,0 +1,59 @@
+textarea {
+	visibility: hidden;
+}
+
+canvas {
+	position: absolute;
+	left: 150px;
+	top: 155px;
+	z-index: 1;
+}
+
+#header {
+	font-size: 16px;
+	color: gray;
+	font-family: serif;
+}
+
+#name {
+	font-size: 14px;
+	color: gray;
+	font-family: serif;
+}
+
+#description {
+	font-size: 14px;
+	margin: 20px;
+}
+
+#control {
+	font-size: 12px;
+	font-family: sans-serif;
+	position: absolute;
+	left: 150px;
+	top: 650px;
+}
+
+#container {
+    text-align: center;
+    width: 100%;
+    margin: 20px;
+    margin-top: 50px;
+}
+
+#tooltip {
+	border: 1px solid gray;
+	background: #FFFF99;
+	width: 130px;
+	padding: 10px;
+	font-family: sans-serif;
+	font-size: 10px;
+}
+
+.invisible {
+	display: none;
+}
+
+.visible {
+	display: block;
+}
