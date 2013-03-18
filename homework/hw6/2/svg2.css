@@ -16,3 +16,15 @@
 #Poland {
   fill: #238B45;
 }
+
+#header {
+    font-size: 16px;
+    color: gray;
+    font-family: serif;
+}
+
+#name {
+    font-size: 14px;
+    color: gray;
+    font-family: serif;
+}
