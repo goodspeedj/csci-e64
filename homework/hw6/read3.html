@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#3</title>
+    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+    <style type="text/css">
+      .barChart1 div {
+        font: 10px sans-serif;
+        background-color: steelblue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+      }
+
+      .barChart2 {
+        font: 10px sans-serif;
+        stroke: white;
+        fill: green;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+
+
+    <script type="text/javascript">
+
+      var data = [4, 8, 15, 16, 23, 42];
+
+      // barChart1
+      var divX = d3.scale.linear()
+          .domain([0, d3.max(data)])
+          .range(["0px", "420px"]);
+
+      var barChart1 = d3.select("body").append("div")
+          .attr("class", "barChart1");
+
+      barChart1.selectAll("div")
+          .data(data)
+        .enter().append("div")
+          .style("width", divX)
+          .style("height", "15px");
+          //.text(function(d) { return d; });
+
+
+      // barChart2
+      var barChart2 = d3.select("body").append("svg")
+          .attr("class", "barChart2")
+          .attr("width", 420)
+          .attr("height", 420);
+
+      var svgX = d3.scale.linear()
+          .domain([0, d3.max(data)])
+          .range([0, 420]);
+
+      var svgY = d3.scale.ordinal()
+          .domain(data)
+          .rangeBands([0, 120]);
+
+      barChart2.selectAll("rect")
+          .data(data)
+        .enter().append("rect")
+          .attr("y", svgY)
+          .attr("width", svgX)
+          .attr("height", 20);
+          /*
+      barChart2.selectAll("text")
+          .data(data)
+        .enter().append("text")
+          .attr("x", svgX)
+          .attr("y", function(d) { return svgY(d) + svgY.rangeBand() / 2; })
+          .attr("dx", -3) 
+          .attr("dy", ".35em") 
+          .attr("text-anchor", "end")
+          .text(String);
+          */
+    </script>
+
+  </body>
+</html>
