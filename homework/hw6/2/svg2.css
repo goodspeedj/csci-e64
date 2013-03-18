@@ -1,0 +1,18 @@
+/* continent color */
+.continent {
+  fill: #E0E0E0;
+  stroke: black;
+}
+
+/* country colors */
+#England {
+  fill: #3690C0;
+}
+
+#France {
+  fill: #EF3B2C;
+}
+
+#Poland {
+  fill: #238B45;
+}
