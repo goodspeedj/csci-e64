@@ -1,8 +1,4 @@
 
-var data_json = document.getElementById("json").value;
-var json      = JSON.parse(data_json);
-
-
 /*
  * Set the fill color of a SVG element
  */
@@ -11,9 +7,14 @@ function changeColor(id, color) {
 }
 
 
+/*
+ * Iterate over the countries and set the color
+ */
 function iterate() {
+	var data_json  = document.getElementById("data").value;
+	var json       = JSON.parse(data_json);
+
     for (var i = 0; i < json.length; i++) {
-        startX += 60;
-        var y = yAxisLen - ((parseFloat(json[i].OPEN) - getYMin()) * yAxisDiv);
+    	changeColor(json[i].COUNTRY, "green");
     }
 }
