@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+textarea {
+  visibility: hidden;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+  <textarea id="json">
+      [
+          { 
+            "OPEN": "26.28",
+            "DATE": "02/26/2013",
+            "VOLUME": "443842" 
+          },
+
+          { 
+            "OPEN": "26.70",
+            "DATE": "02/27/2013",
+            "VOLUME": "343179"
+          },
+          {
+            "OPEN": "27.20",
+            "DATE": "02/28/2013",
+            "VOLUME": "262821"
+          },
+          {
+            "OPEN": "26.90",
+            "DATE": "03/01/2013",
+            "VOLUME": "297274"
+          },
+          {
+            "OPEN": "27.47",
+            "DATE": "03/04/2013",
+            "VOLUME": "321933"
+          },
+          {
+            "OPEN": "27.38",
+            "DATE": "03/05/2013",
+            "VOLUME": "278871"
+          },
+          {
+            "OPEN": "27.60",
+            "DATE": "03/06/2013",
+            "VOLUME": "309123"
+          },
+          {
+            "OPEN": "28.53",
+            "DATE": "03/07/2013",
+            "VOLUME": "425037"
+          },
+          {
+            "OPEN": "28.33",
+            "DATE": "03/08/2013",
+            "VOLUME": "359761"
+          },
+          {
+            "OPEN": "28.16",
+            "DATE": "03/11/2013",
+            "VOLUME": "155354"
+          }
+      ]
+    </textarea>
+
+  <textarea id="data">
+    date  close
+    1-May-12  582.13
+    30-Apr-12 583.98
+    27-Apr-12 603.00
+    26-Apr-12 607.70
+    25-Apr-12 610.00
+    24-Apr-12 560.28
+    23-Apr-12 571.70
+    20-Apr-12 572.98
+    19-Apr-12 587.44
+    18-Apr-12 608.34
+    17-Apr-12 609.70
+    16-Apr-12 580.13
+    13-Apr-12 605.23
+    12-Apr-12 622.77
+    11-Apr-12 626.20
+    10-Apr-12 628.44
+    9-Apr-12  636.23
+    5-Apr-12  633.68
+    4-Apr-12  624.31
+    3-Apr-12  629.32
+    2-Apr-12  618.63
+    30-Mar-12 599.55
+    29-Mar-12 609.86
+    28-Mar-12 617.62
+    27-Mar-12 614.48
+    26-Mar-12 606.98
+    23-Mar-12 596.05
+    22-Mar-12 599.34
+    21-Mar-12 602.50
+    20-Mar-12 605.96
+    19-Mar-12 601.10
+    16-Mar-12 585.57
+    15-Mar-12 585.56
+    14-Mar-12 589.58
+</textarea>
+
+<script src="http://d3js.org/d3.v3.js"></script>
+<script>
+
+
+var data_json = document.getElementById("json").value;
+var json       = JSON.parse(data_json);
+
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%m/%d/%Y").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { 
+        return x(d.DATE); 
+    })
+    .y(function(d) { 
+        return y(d.OPEN); 
+    });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+/*
+d3.tsv(data_tsv, function(data) {
+  data.forEach(function(d) {
+
+    d.date = parseDate(d.date);
+    d.close = +d.close;
+  });
+*/
+
+
+for (var i = 0; i < json.length; i++) {
+
+  console.log("DATE: " + json[i].DATE + "\tOPEN: " + json[i].OPEN);
+  x.domain(d3.extent(data, function(d) { return json[i].DATE; }));
+  y.domain(d3.extent(data, function(d) { return json[i].OPEN; }));
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price ($)");
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+}
+
+</script>
