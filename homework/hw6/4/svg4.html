@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Line Graph with D3</title>
+    <link rel="stylesheet" type="text/css" href="svg4.css"/>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+
+    <textarea id="json">
+      [
+          { 
+            "OPEN": "26.28",
+            "DATE": "02/26/2013",
+            "VOLUME": "443842" 
+          },
+
+          { 
+            "OPEN": "26.70",
+            "DATE": "02/27/2013",
+            "VOLUME": "343179"
+          },
+          {
+            "OPEN": "27.20",
+            "DATE": "02/28/2013",
+            "VOLUME": "262821"
+          },
+          {
+            "OPEN": "26.90",
+            "DATE": "03/01/2013",
+            "VOLUME": "297274"
+          },
+          {
+            "OPEN": "27.47",
+            "DATE": "03/04/2013",
+            "VOLUME": "321933"
+          },
+          {
+            "OPEN": "27.38",
+            "DATE": "03/05/2013",
+            "VOLUME": "278871"
+          },
+          {
+            "OPEN": "27.60",
+            "DATE": "03/06/2013",
+            "VOLUME": "309123"
+          },
+          {
+            "OPEN": "28.53",
+            "DATE": "03/07/2013",
+            "VOLUME": "425037"
+          },
+          {
+            "OPEN": "28.33",
+            "DATE": "03/08/2013",
+            "VOLUME": "359761"
+          },
+          {
+            "OPEN": "28.16",
+            "DATE": "03/11/2013",
+            "VOLUME": "155354"
+          }
+      ]
+    </textarea>
+
+    <script type="text/javascript">
+        var data   = document.getElementById("json").value;
+        var margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        var width  = 960 - margin.left - margin.right,
+        var height = 500 - margin.top - margin.bottom;
+
+        var parseDate = d3.time.format("%m/%d/%Y").parse;
+
+        var x = d3.time.scale()
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+        var line = d3.svg.line()
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.close); });
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    </script>
+  </body>
+</html>
