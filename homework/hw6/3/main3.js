@@ -27,10 +27,10 @@ function iterate() {
     		changeColor(json[i].COUNTRY, "#FD8D3C");
     	}
     	else if (pop > 48013336 && pop <= 71860002) {
-    		changeColor(json[i].COUNTRY, "#FECC5C");
+    		changeColor(json[i].COUNTRY, "#FEB24C");
     	}
     	else if (pop > 24166670 && pop <= 48013336) {
-    		changeColor(json[i].COUNTRY, "#FECC5C");
+    		changeColor(json[i].COUNTRY, "#FED");
     	}
     	else {
     		changeColor(json[i].COUNTRY, "#FFFFB2");
