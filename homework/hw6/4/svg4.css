@@ -1,3 +1,36 @@
-textarea {
-  visibility: hidden;
+#header {
+    font-size: 16px;
+    color: gray;
+    font-family: serif;
+}
+
+#name {
+    font-size: 14px;
+    color: gray;
+    font-family: serif;
+}
+
+#description {
+    font-size: 14px;
+    margin: 20px;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000000;
+
+}
+
+
+.line {
+  fill: none;
+  stroke: #377EB8;
+  stroke-width: 2.5px;
+}
+
+text {
+    font-size: 12px;
+    font-family: serif;
 }
