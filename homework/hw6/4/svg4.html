@@ -3,6 +3,12 @@
   <head>
     <title>Line Graph with D3</title>
     <link rel="stylesheet" type="text/css" href="svg4.css"/>
+    <style>
+    .chart rect {
+      fill: steelblue;
+      stroke: white;
+    }
+    </style>
     <script src="http://d3js.org/d3.v3.min.js"></script>
   </head>
   <body>
@@ -65,18 +71,39 @@
 
     <script type="text/javascript">
 
-        var margin = { top: 20, right: 20, bottom: 30, left: 50 };
-        var width  = 960 - margin.left - margin.right;
-        var height = 500 - margin.top - margin.bottom;
+        var w = 20,
+    h = 80;
 
-        var x = d3.time.scale().range(0, width);
-        var y = d3.scale.linear().range([height, 0]);
+var x = d3.scale.linear()
+    .domain([0, 1])
+    .range([0, w]);
+
+var y = d3.scale.linear()
+    .domain([0, 100])
+    .rangeRound([0, h]);
 
         var data = document.getElementById("json").value;
-        var json = JSON.parse(data_json);
+        //var json = JSON.parse(data_json);
 
+        var chart = d3.select("body").append("svg")
+    .attr("class", "chart")
+    .attr("width", w * data.length - 1)
+    .attr("height", h);
 
+        chart.selectAll("rect")
+    .data(data)
+  .enter().append("rect")
+    .attr("x", function(d, i) { return x(i) - .5; })
+    .attr("y", function(d) { return h - y(d.OPEN) - .5; })
+    .attr("width", w)
+    .attr("height", function(d) { return y(d.OPEN); });
 
+chart.append("line")
+    .attr("x1", 0)
+    .attr("x2", w * data.length)
+    .attr("y1", h - .5)
+    .attr("y2", h - .5)
+    .style("stroke", "#000");
 
     </script>
   </body>

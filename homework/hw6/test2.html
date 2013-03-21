@@ -85,7 +85,7 @@ textarea {
       ]
     </textarea>
 
-  <textarea id="data">
+  <textarea id="tsv">
     date  close
     1-May-12  582.13
     30-Apr-12 583.98
@@ -127,8 +127,8 @@ textarea {
 <script>
 
 
-var data_json = document.getElementById("json").value;
-var json       = JSON.parse(data_json);
+var data = document.getElementById("json").value;
+var json = JSON.parse(data);
 
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -151,6 +151,8 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
+
+// this is erroring
 var line = d3.svg.line()
     .x(function(d) { 
         return x(d.DATE); 
@@ -179,14 +181,16 @@ d3.tsv(data_tsv, function(data) {
 for (var i = 0; i < json.length; i++) {
 
   console.log("DATE: " + json[i].DATE + "\tOPEN: " + json[i].OPEN);
+  
   x.domain(d3.extent(data, function(d) { return json[i].DATE; }));
   y.domain(d3.extent(data, function(d) { return json[i].OPEN; }));
+
 
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
-
+  
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
@@ -197,10 +201,14 @@ for (var i = 0; i < json.length; i++) {
       .style("text-anchor", "end")
       .text("Price ($)");
 
+
+
+  // This is erroring
   svg.append("path")
       .datum(data)
       .attr("class", "line")
       .attr("d", line);
+  
 }
 
 </script>
