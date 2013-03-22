@@ -13,8 +13,8 @@
 #description {
     font-size: 14px;
     margin: 20px;
+    width: 940px;
 }
-
 
 .axis path,
 .axis line {
@@ -22,7 +22,6 @@
   stroke: #000000;
 
 }
-
 
 .line {
   fill: none;
