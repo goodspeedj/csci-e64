@@ -1,0 +1,17 @@
+#header {
+    font-size: 16px;
+    color: gray;
+    font-family: serif;
+}
+
+#name {
+    font-size: 14px;
+    color: gray;
+    font-family: serif;
+}
+
+#description {
+    font-size: 14px;
+    margin: 20px;
+    width: 600px;
+}
